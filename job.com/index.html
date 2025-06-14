@@ -1,0 +1,1065 @@
+.city-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.city-card:hover .city-img {
+    transform: scale(1.1);
+}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JobDekho - Indian Job Board</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --gradient-primary: linear-gradient(45deg, #3F5EFB, #FC466B);
+    --gradient-secondary: linear-gradient(45deg, #11998e, #38ef7d);
+    --gradient-tertiary: linear-gradient(45deg, #8E2DE2, #4A00E0);
+    --gradient-quaternary: linear-gradient(45deg, #f953c6, #b91d73);
+    --accent-color: #FC466B;
+    --secondary-color: #3F5EFB;
+    --light-bg: #f8f9fa;
+    --dark-text: #333;
+    --light-text: #fff;
+    --grey-text: #6c757d;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header {
+    background: var(--gradient-primary);
+    color: var(--light-text);
+    padding: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    color: #fff;
+    margin-left: 5px;
+}
+
+.nav-items {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-items a {
+    color: var(--light-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-items a:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.hero {
+    padding: 80px 0;
+    text-align: center;
+    background: linear-gradient(135deg, #3F5EFB, #FC466B);
+    position: relative;
+    color: var(--light-text);
+    overflow: hidden;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/api/placeholder/1200/400') center/cover;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-bar {
+    display: flex;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    flex: 1;
+    padding: 15px 25px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-select {
+    padding: 15px;
+    border: none;
+    border-left: 1px solid #eee;
+    outline: none;
+    background-color: white;
+    color: var(--dark-text);
+    font-size: 16px;
+}
+
+.search-btn {
+    padding: 15px 30px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    opacity: 0.9;
+}
+
+.categories {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 32px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.category-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-card:hover::before {
+    opacity: 0.05;
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.1);
+}
+
+.category-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease;
+}
+
+.category-card h3 {
+    margin-bottom: 10px;
+}
+
+.category-card p {
+    color: var(--grey-text);
+    font-size: 14px;
+}
+
+.featured-jobs {
+    padding: 60px 0;
+    background-color: white;
+}
+
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.job-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.job-header {
+    padding: 20px;
+    background: var(--gradient-primary);
+    color: white;
+    position: relative;
+}
+
+.job-company {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.job-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.job-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.job-tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+}
+
+.job-body {
+    padding: 20px;
+    background: white;
+}
+
+.job-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.job-detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--grey-text);
+    font-size: 14px;
+}
+
+.job-description {
+    margin-bottom: 20px;
+    color: var(--grey-text);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-salary {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.apply-btn {
+    padding: 8px 20px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.apply-btn:hover {
+    opacity: 0.9;
+}
+
+.cities {
+    padding: 60px 0;
+}
+
+.city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.city-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 180px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.city-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    font-weight: 600;
+}
+
+.city-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+
+.city-card:hover::after {
+    opacity: 0.4;
+}
+
+.testimonials {
+    padding: 60px 0;
+    background-color: white;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 120px;
+    color: rgba(63, 94, 251, 0.1);
+    font-family: Georgia, serif;
+    line-height: 0;
+}
+
+.testimonial-content {
+    position: relative;
+    z-index: 1;
+}
+
+.testimonial-text {
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.author-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-info h4 {
+    margin-bottom: 5px;
+}
+
+.author-info p {
+    color: var(--grey-text);
+    font-size: 14px;
+}
+
+.footer {
+    background: var(--gradient-primary);
+    color: var(--light-text);
+    padding: 60px 0 30px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-col h3 {
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-col h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: white;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .hero h1 {
+        font-size: 36px;
+    }
+    
+    .search-bar {
+        flex-direction: column;
+        border-radius: 10px;
+    }
+    
+    .search-input, .search-select, .search-btn {
+        width: 100%;
+    }
+    
+    .job-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="container">
+    <nav class="nav">
+        <div class="logo">
+            Job<span>Dekho</span>
+        </div>
+        <div class="nav-items">
+            <a href="#">Home</a>
+            <a href="#">Jobs</a>
+            <a href="#">Companies</a>
+            <a href="#">Resources</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+</div>
+</header>
+
+<section class="hero">
+<div class="container hero-content">
+    <h1>Find Your Dream Job in India</h1>
+    <p>Explore thousands of job opportunities across India's top companies and start your career journey today.</p>
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Job title, keywords, or company">
+        <select class="search-select">
+            <option value="">All Locations</option>
+            <option value="delhi">Delhi</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="bangalore">Bangalore</option>
+            <option value="hyderabad">Hyderabad</option>
+            <option value="chennai">Chennai</option>
+            <option value="pune">Pune</option>
+        </select>
+        <button class="search-btn">Search Jobs</button>
+    </div>
+</div>
+</section>
+
+<section class="categories">
+<div class="container">
+    <h2 class="section-title">Popular Categories</h2>
+    <div class="category-grid">
+        <div class="category-card">
+            <div class="category-icon">💻</div>
+            <h3>Information Technology</h3>
+            <p>9,245 open positions</p>
+        </div>
+        <div class="category-card">
+            <div class="category-icon">🏦</div>
+            <h3>Banking & Finance</h3>
+            <p>6,189 open positions</p>
+        </div>
+        <div class="category-card">
+            <div class="category-icon">🛍️</div>
+            <h3>Sales & Marketing</h3>
+            <p>5,732 open positions</p>
+        </div>
+        <div class="category-card">
+            <div class="category-icon">🏥</div>
+            <h3>Healthcare</h3>
+            <p>4,219 open positions</p>
+        </div>
+        <div class="category-card">
+            <div class="category-icon">📚</div>
+            <h3>Education</h3>
+            <p>3,875 open positions</p>
+        </div>
+        <div class="category-card">
+            <div class="category-icon">🌐</div>
+            <h3>Digital Media</h3>
+            <p>3,540 open positions</p>
+        </div>
+        <div class="category-card">
+            <div class="category-icon">🏗️</div>
+            <h3>Construction</h3>
+            <p>2,987 open positions</p>
+        </div>
+        <div class="category-card">
+            <div class="category-icon">🚚</div>
+            <h3>Logistics</h3>
+            <p>2,754 open positions</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="featured-jobs">
+<div class="container">
+    <h2 class="section-title">Featured Jobs</h2>
+    <div class="job-grid">
+        <div class="job-card">
+            <div class="job-header">
+                <div class="job-company">TCS</div>
+                <h3 class="job-title">Senior Software Engineer</h3>
+                <div class="job-tags">
+                    <span class="job-tag">Full Time</span>
+                    <span class="job-tag">Remote</span>
+                    <span class="job-tag">Urgent</span>
+                </div>
+            </div>
+            <div class="job-body">
+                <div class="job-details">
+                    <div class="job-detail">
+                        <span>📍</span> Bangalore
+                    </div>
+                    <div class="job-detail">
+                        <span>⏱️</span> Posted 2 days ago
+                    </div>
+                </div>
+                <div class="job-description">
+                    Looking for an experienced Software Engineer with expertise in Java, Spring Boot, and microservices architecture. The ideal candidate should have 5+ years of experience in software development.
+                </div>
+                <div class="job-footer">
+                    <div class="job-salary">₹18L - ₹25L per annum</div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="job-card">
+            <div class="job-header">
+                <div class="job-company">Flipkart</div>
+                <h3 class="job-title">Product Manager</h3>
+                <div class="job-tags">
+                    <span class="job-tag">Full Time</span>
+                    <span class="job-tag">On-site</span>
+                </div>
+            </div>
+            <div class="job-body">
+                <div class="job-details">
+                    <div class="job-detail">
+                        <span>📍</span> Mumbai
+                    </div>
+                    <div class="job-detail">
+                        <span>⏱️</span> Posted 5 days ago
+                    </div>
+                </div>
+                <div class="job-description">
+                    We're looking for a Product Manager to lead our e-commerce platform initiatives. You'll work closely with engineering, design, and marketing teams to drive product vision and strategy.
+                </div>
+                <div class="job-footer">
+                    <div class="job-salary">₹22L - ₹30L per annum</div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="job-card">
+            <div class="job-header">
+                <div class="job-company">Infosys</div>
+                <h3 class="job-title">Data Scientist</h3>
+                <div class="job-tags">
+                    <span class="job-tag">Full Time</span>
+                    <span class="job-tag">Hybrid</span>
+                </div>
+            </div>
+            <div class="job-body">
+                <div class="job-details">
+                    <div class="job-detail">
+                        <span>📍</span> Hyderabad
+                    </div>
+                    <div class="job-detail">
+                        <span>⏱️</span> Posted 1 week ago
+                    </div>
+                </div>
+                <div class="job-description">
+                    Join our analytics team to build and deploy machine learning models. You should have strong statistical knowledge, proficiency in Python, and experience with ML frameworks like TensorFlow or PyTorch.
+                </div>
+                <div class="job-footer">
+                    <div class="job-salary">₹15L - ₹22L per annum</div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="job-card">
+            <div class="job-header">
+                <div class="job-company">HDFC Bank</div>
+                <h3 class="job-title">Risk Analyst</h3>
+                <div class="job-tags">
+                    <span class="job-tag">Full Time</span>
+                    <span class="job-tag">On-site</span>
+                </div>
+            </div>
+            <div class="job-body">
+                <div class="job-details">
+                    <div class="job-detail">
+                        <span>📍</span> Delhi
+                    </div>
+                    <div class="job-detail">
+                        <span>⏱️</span> Posted 3 days ago
+                    </div>
+                </div>
+                <div class="job-description">
+                    We are seeking a Risk Analyst to evaluate financial risks and develop risk management strategies. The ideal candidate will have a background in finance, strong analytical skills, and knowledge of risk assessment methodologies.
+                </div>
+                <div class="job-footer">
+                    <div class="job-salary">₹12L - ₹18L per annum</div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="job-card">
+            <div class="job-header">
+                <div class="job-company">Reliance Digital</div>
+                <h3 class="job-title">UI/UX Designer</h3>
+                <div class="job-tags">
+                    <span class="job-tag">Full Time</span>
+                    <span class="job-tag">Remote</span>
+                </div>
+            </div>
+            <div class="job-body">
+                <div class="job-details">
+                    <div class="job-detail">
+                        <span>📍</span> Chennai
+                    </div>
+                    <div class="job-detail">
+                        <span>⏱️</span> Posted 4 days ago
+                    </div>
+                </div>
+                <div class="job-description">
+                    Looking for a talented UI/UX Designer to create amazing user experiences for our digital products. You should have a strong portfolio demonstrating your design thinking and execution skills.
+                </div>
+                <div class="job-footer">
+                    <div class="job-salary">₹14L - ₹20L per annum</div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="job-card">
+            <div class="job-header">
+                <div class="job-company">Zomato</div>
+                <h3 class="job-title">Operations Manager</h3>
+                <div class="job-tags">
+                    <span class="job-tag">Full Time</span>
+                    <span class="job-tag">On-site</span>
+                </div>
+            </div>
+            <div class="job-body">
+                <div class="job-details">
+                    <div class="job-detail">
+                        <span>📍</span> Pune
+                    </div>
+                    <div class="job-detail">
+                        <span>⏱️</span> Posted 1 day ago
+                    </div>
+                </div>
+                <div class="job-description">
+                    We're looking for an Operations Manager to oversee our food delivery operations. The ideal candidate will have experience in logistics, team management, and process optimization.
+                </div>
+                <div class="job-footer">
+                    <div class="job-salary">₹16L - ₹24L per annum</div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="cities">
+<div class="container">
+    <h2 class="section-title">Jobs by Cities</h2>
+    <div class="city-grid">
+        <div class="city-card">
+            <img src=" " alt="Delhi" class="city-img">
+            <div class="city-name">Delhi - India Gate</div>
+        </div>
+        <div class="city-card">
+            <img src=" " alt="Mumbai" class="city-img">
+            <div class="city-name">Mumbai - Gateway of India</div>
+        </div>
+        <div class="city-card">
+            <img src="https://media.istockphoto.com/id/1053591762/photo/vidhan-soudha.webp?a=1&b=1&s=612x612&w=0&k=20&c=toYUuF4mJxdOo2JNHYZVYo44jlpp7IKMKCeZLttZ-ZA=" alt="Bangalore" class="city-img">
+            <div class="city-name">Bangalore - Vidhana Soudha</div>
+        </div>
+        <div class="city-card">
+            <img src="/api/placeholder/300/200" alt="Hyderabad" class="city-img">
+            <div class="city-name">Hyderabad - Charminar</div>
+        </div>
+        <div class="city-card">
+            <img src="/api/placeholder/300/200" alt="Chennai" class="city-img">
+            <div class="city-name">Chennai - Marina Beach</div>
+        </div>
+        <div class="city-card">
+            <img src="/api/placeholder/300/200" alt="Pune" class="city-img">
+            <div class="city-name">Pune - Shaniwar Wada</div>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="testimonials">
+<div class="container">
+    <h2 class="section-title">Success Stories</h2>
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <div class="testimonial-content">
+                <p class="testimonial-text">JobDekho helped me find my dream job within just 2 weeks of signing up! The platform is so user-friendly and has the best job listings in the tech industry.</p>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/100/100" alt="Priya Sharma" class="author-img">
+                    <div class="author-info">
+                        <h4>Priya Sharma</h4>
+                        <p>Software Developer at Microsoft</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-content">
+                <p class="testimonial-text">After struggling for months to find a suitable position in finance, I found multiple opportunities through JobDekho. Their filtering system is exceptional!</p>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/100/100" alt="Rahul Patel" class="author-img">
+                    <div class="author-info">
+                        <h4>Rahul Patel</h4>
+                        <p>Financial Analyst at ICICI</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-content">
+                <p class="testimonial-text">As a fresher, I was worried about finding good opportunities. JobDekho not only helped me find a great first job but also provided resources to prepare for interviews.</p>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/100/100" alt="Ananya Desai" class="author-img">
+                    <div class="author-info">
+                        <h4>Ananya Desai</h4>
+                        <p>Marketing Associate at Flipkart</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="container">
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>JobDekho</h3>
+            <p>India's leading job portal connecting talented professionals with top companies across the country.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon">f</a>
+                <a href="#" class="social-icon">in</a>
+                <a href="#" class="social-icon">t</a>
+                <a href="#" class="social-icon">ig</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h3>For Job Seekers</h3>
+            <ul class="footer-links">
+                <li><a href="#">Browse Jobs</a></li>
+                <li><a href="#">Career Resources</a></li>
+                <li><a href="#">Resume Builder</a></li>
+                <li><a href="#">Job Alerts</a></li>
+                <li><a href="#">Salary Calculator</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>For Employers</h3>
+            <ul class="footer-links">
+                <li><a href="#">Post a Job</a></li>
+                <li><a href="#">Search Resumes</a></li>
+                <li><a href="#">Employer Branding</a></li>
+                <li><a href="#">Recruitment Solutions</a></li>
+                <li><a href="#">Pricing Plans</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Contact Us</h3>
+            <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 JobDekho. All rights reserved.</p>
+    </div>
+</div>
+</footer>
+
+<script>
+// Job Search Functionality
+document.querySelector('.search-btn').addEventListener('click', function() {
+    const keyword = document.querySelector('.search-input').value.toLowerCase();
+    const location = document.querySelector('.search-select').value;
+    
+    // In a real app, this would make an API call
+    alert(`Searching for "${keyword}" jobs in ${location || 'All Locations'}`);
+});
+
+// Job Category Selection
+const categoryCards = document.querySelectorAll('.category-card');
+categoryCards.forEach(card => {
+    card.addEventListener('click', function() {
+        const category = this.querySelector('h3').textContent;
+        alert(`Viewing jobs in ${category} category`);
+    });
+});
+
+// Job Application
+const applyButtons = document.querySelectorAll('.apply-btn');
+applyButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const jobTitle = this.closest('.job-card').querySelector('.job-title').textContent;
+        const company = this.closest('.job-card').querySelector('.job-company').textContent;
+        alert(`Applying for ${jobTitle} at ${company}`);
+    });
+});
+
+// City Selection with historical landmarks
+const cityCards = document.querySelectorAll('.city-card');
+const cityImages = [
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQexqXlJWa5ApysZaS5CB-wHWALV6LbN7WuDQ&s?text=India+gate', // Delhi - Red Fort
+    'https://media.istockphoto.com/id/471688680/photo/gateway-of-india-mumbai-colorful-night-view.webp?a=1&b=1&s=612x612&w=0&k=20&c=0Z_0Rj7Wzr-ZskW6Z_W4QdIAuhFbo1-hrGcx1xGmSdo=?text=Gateway+of+India', // Mumbai - Gateway of India
+    'https://media.istockphoto.com/id/1053591762/photo/vidhan-soudha.webp?a=1&b=1&s=612x612&w=0&k=20&c=toYUuF4mJxdOo2JNHYZVYo44jlpp7IKMKCeZLttZ-ZA=?text=Vidhana+Soudha', // Bangalore - Vidhana Soudha
+    '/api/placeholder/300/200?text=Charminar', // Hyderabad - Charminar
+    '/api/placeholder/300/200?text=Marina+Beach', // Chennai - Marina Beach
+    '/api/placeholder/300/200?text=Shaniwar+Wada'  // Pune - Shaniwar Wada
+];
+
+cityCards.forEach((card, index) => {
+    // Set historical landmark images
+    if (index < cityImages.length) {
+        card.querySelector('.city-img').src = cityImages[index];
+    }
+    
+    card.addEventListener('click', function() {
+        const city = this.querySelector('.city-name').textContent.split(' - ')[0];
+        alert(`Viewing jobs in ${city}`);
+    });
+});
+
+// Add smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Add background gradient animations
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.job-card');
+    
+    cards.forEach((card, index) => {
+        const header = card.querySelector('.job-header');
+        const gradients = [
+            'linear-gradient(45deg, #3F5EFB, #FC466B)',
+            'linear-gradient(45deg, #11998e, #38ef7d)',
+            'linear-gradient(45deg, #FC466B, #3F5EFB)',
+            'linear-gradient(45deg, #8E2DE2, #4A00E0)',
+            'linear-gradient(45deg, #f953c6, #b91d73)',
+            'linear-gradient(45deg, #1f4037, #99f2c8)'
+        ];
+        
+        header.style.background = gradients[index % gradients.length];
+    });
+});
+</script>
+</body>
+</html>
